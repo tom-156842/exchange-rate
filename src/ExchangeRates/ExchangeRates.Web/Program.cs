@@ -1,3 +1,5 @@
+using ExchangeRates.Domain.Services;
+
 namespace ExchangeRates.Web
 {
     public class Program
@@ -31,6 +33,8 @@ namespace ExchangeRates.Web
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
         }
     }
 }
