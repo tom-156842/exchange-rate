@@ -20,3 +20,17 @@ To build and run the solution from Visual Studio 2022:
 2. Double-click the `ExchangeRates.sln` file to open the solution in Visual Studio
 3. Ensure `ExchangeRates.Web` is the start-up project
 4. Click run from the toolbar, or press F5
+
+## Example usage
+
+### Example 1
+
+Fetch the exchange rate history for specific dates.
+
+- Source currency: SEK
+- Target currency: NOK
+- Dates: 2018-02-01, 2018-02-15, 2018-03-01
+
+```
+https://localhost:7027/api/exchangeratehistory?source=SEK&target=NOK&dates=2018-02-01&dates=2018-02-15&dates=2018-03-01
+```

@@ -1,4 +1,6 @@
+using ExchangeRates.Domain.Integrations;
 using ExchangeRates.Domain.Services;
+using ExchangeRates.Integration.ExchangeRateHost;
 
 namespace ExchangeRates.Web
 {
@@ -33,8 +35,12 @@ namespace ExchangeRates.Web
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient();
 
             builder.Services.AddScoped<IExchangeRateService, ExchangeRateService>();
+            builder.Services.AddScoped<IExchangeRateProvider, ExchangeRateProvider>();
+            builder.Services.AddScoped<IExchangeRateHostClient, ExchangeRateHostClient>();
+            builder.Services.Configure<ExchangeRateHostClientOptions>(builder.Configuration.GetSection(ExchangeRateHostClientOptions.DefaultSectionName));
         }
     }
 }

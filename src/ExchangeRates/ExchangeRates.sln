@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRates.Web", "Exchan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRates.Domain", "ExchangeRates.Domain\ExchangeRates.Domain.csproj", "{71EC7EFC-900D-4CAB-93DC-C73B2D848544}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRates.Integration.ExchangeRateHost", "ExchangeRates.Integration.ExchangeRateHost\ExchangeRates.Integration.ExchangeRateHost.csproj", "{72E2C301-2E76-4508-8D7F-3B655EB0FD5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{71EC7EFC-900D-4CAB-93DC-C73B2D848544}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71EC7EFC-900D-4CAB-93DC-C73B2D848544}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71EC7EFC-900D-4CAB-93DC-C73B2D848544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E2C301-2E76-4508-8D7F-3B655EB0FD5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E2C301-2E76-4508-8D7F-3B655EB0FD5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E2C301-2E76-4508-8D7F-3B655EB0FD5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E2C301-2E76-4508-8D7F-3B655EB0FD5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

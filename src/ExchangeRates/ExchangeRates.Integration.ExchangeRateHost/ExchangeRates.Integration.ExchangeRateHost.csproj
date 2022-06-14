@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExchangeRates.Integration.ExchangeRateHost\ExchangeRates.Integration.ExchangeRateHost.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 
 </Project>

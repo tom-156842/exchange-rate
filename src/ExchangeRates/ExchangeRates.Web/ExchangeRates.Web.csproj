@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExchangeRates.Domain\ExchangeRates.Domain.csproj" />
+    <ProjectReference Include="..\ExchangeRates.Integration.ExchangeRateHost\ExchangeRates.Integration.ExchangeRateHost.csproj" />
   </ItemGroup>
 
 </Project>

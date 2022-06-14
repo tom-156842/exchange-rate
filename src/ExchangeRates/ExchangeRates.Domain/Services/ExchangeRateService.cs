@@ -1,21 +1,46 @@
-﻿using ExchangeRates.Domain.Models;
+﻿using ExchangeRates.Domain.Integrations;
+using ExchangeRates.Domain.Models;
 
 namespace ExchangeRates.Domain.Services
 {
     public interface IExchangeRateService
     {
-        ExchangeRateStatistics GetExchangeRateStatistics(string sourceCurrency, string targetCurrency, DateTime[] dates);
+        Task<ExchangeRateStatistics> GetExchangeRateStatisticsAsync(string sourceCurrency, string targetCurrency, DateTime[] dates);
     }
 
     public class ExchangeRateService : IExchangeRateService
     {
-        public ExchangeRateStatistics GetExchangeRateStatistics(string sourceCurrency, string targetCurrency, DateTime[] dates)
+        private readonly IExchangeRateProvider _provider;
+
+        public ExchangeRateService(IExchangeRateProvider provider)
         {
+            _provider = provider ?? throw new ArgumentNullException(nameof(provider));
+        }
+
+        public async Task<ExchangeRateStatistics> GetExchangeRateStatisticsAsync(string sourceCurrency, string targetCurrency, DateTime[] dates)
+        {
+            if (string.IsNullOrEmpty(sourceCurrency))
+            {
+                throw new ArgumentException($"'{nameof(sourceCurrency)}' cannot be null or empty.", nameof(sourceCurrency));
+            }
+
+            if (string.IsNullOrEmpty(targetCurrency))
+            {
+                throw new ArgumentException($"'{nameof(targetCurrency)}' cannot be null or empty.", nameof(targetCurrency));
+            }
+
+            if (dates is null)
+            {
+                throw new ArgumentNullException(nameof(dates));
+            }
+
+            var rates = await _provider.GetExchangeRatesAsync(sourceCurrency, targetCurrency, dates);
+
             return new ExchangeRateStatistics
             {
-                Min = 1.1M,
-                Max = 9.9M,
-                Avg = 5.5M
+                Min = rates.Min(x => x.Rate),
+                Max = rates.Max(x => x.Rate),
+                Avg = rates.Average(x => x.Rate)
             };
         }
     }

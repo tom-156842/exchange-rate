@@ -16,9 +16,9 @@ namespace ExchangeRates.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAsync([FromQuery]GetRequest model)
+        public async Task<IActionResult> GetAsync([FromQuery]GetRequest model)
         {
-            var statistics = _exchangeRateService.GetExchangeRateStatistics(
+            var statistics = await _exchangeRateService.GetExchangeRateStatisticsAsync(
                 model.SourceCurrency,
                 model.TargetCurrency,
                 model.Dates);
