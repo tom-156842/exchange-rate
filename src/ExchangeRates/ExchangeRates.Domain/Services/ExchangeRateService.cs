@@ -19,14 +19,14 @@ namespace ExchangeRates.Domain.Services
 
         public async Task<ExchangeRateStatistics> GetExchangeRateStatisticsAsync(string sourceCurrency, string targetCurrency, DateTime[] dates)
         {
-            if (string.IsNullOrEmpty(sourceCurrency))
+            if (sourceCurrency is null)
             {
-                throw new ArgumentException($"'{nameof(sourceCurrency)}' cannot be null or empty.", nameof(sourceCurrency));
+                throw new ArgumentNullException(nameof(sourceCurrency));
             }
 
-            if (string.IsNullOrEmpty(targetCurrency))
+            if (targetCurrency is null)
             {
-                throw new ArgumentException($"'{nameof(targetCurrency)}' cannot be null or empty.", nameof(targetCurrency));
+                throw new ArgumentNullException(nameof(targetCurrency));
             }
 
             if (dates is null)

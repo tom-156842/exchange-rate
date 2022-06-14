@@ -1,6 +1,6 @@
 ﻿namespace ExchangeRates.Web.Models.ExchangeRateHistory
 {
-    public class ExchangeRateStatistics
+    public class ExchangeRateStatisticsModel
     {
         public decimal Min { get; set; }
 

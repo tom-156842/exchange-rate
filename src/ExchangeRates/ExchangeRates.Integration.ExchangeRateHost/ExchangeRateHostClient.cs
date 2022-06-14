@@ -23,15 +23,8 @@ namespace ExchangeRates.Integration.ExchangeRateHost
 
         public async Task<HistoricalRateResponse> GetHistoricalRateAsync(string sourceCurrency, string targetCurrency, DateTime date)
         {
-            if (string.IsNullOrEmpty(sourceCurrency))
-            {
-                throw new ArgumentException($"'{nameof(sourceCurrency)}' cannot be null or empty.", nameof(sourceCurrency));
-            }
-
-            if (string.IsNullOrEmpty(targetCurrency))
-            {
-                throw new ArgumentException($"'{nameof(targetCurrency)}' cannot be null or empty.", nameof(targetCurrency));
-            }
+            sourceCurrency = sourceCurrency.ToUpperInvariant();
+            targetCurrency = targetCurrency.ToUpperInvariant();
 
             using var httpClient = _httpClientFactory.CreateClient(HttpClientName);
             httpClient.BaseAddress = new Uri(_options.BaseUrl);

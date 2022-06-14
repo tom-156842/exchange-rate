@@ -25,7 +25,7 @@ namespace ExchangeRates.Web.Controllers
 
             return Ok(new GetResponse
             {
-                Statistics = new ExchangeRateStatistics
+                Statistics = new ExchangeRateStatisticsModel
                 {
                     Min = statistics.Min,
                     Max = statistics.Max,

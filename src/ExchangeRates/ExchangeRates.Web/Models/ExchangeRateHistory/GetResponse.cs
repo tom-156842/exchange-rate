@@ -2,6 +2,6 @@
 {
     public class GetResponse
     {
-        public ExchangeRateStatistics Statistics { get; set; }
+        public ExchangeRateStatisticsModel Statistics { get; set; }
     }
 }
