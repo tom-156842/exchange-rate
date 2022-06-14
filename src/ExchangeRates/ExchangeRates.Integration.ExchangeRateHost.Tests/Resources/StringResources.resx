@@ -117,31 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ExchangeRateHost_HistoricalRates_NonSuccess" xml:space="preserve">
+  <data name="ExchangeRateHost_TimeSeries_NonSuccess" xml:space="preserve">
     <value>{
   "motd": {
     "msg": "If you or your company use this project or like what we doing, please consider backing us so we can continue maintaining and evolving this project.",
     "url": "https://exchangerate.host/#/donate"
   },
   "success": false,
-  "historical": true,
-  "base": "SEK",
-  "date": "2020-04-04",
+  "timeseries": true,
+  "base": "USD",
+  "start_date": "2020-04-04",
+  "end_date": "2020-04-06",
   "rates": null
 }</value>
   </data>
-  <data name="ExchangeRateHost_HistoricalRates_Success" xml:space="preserve">
+  <data name="ExchangeRateHost_TimeSeries_Success" xml:space="preserve">
     <value>{
   "motd": {
     "msg": "If you or your company use this project or like what we doing, please consider backing us so we can continue maintaining and evolving this project.",
     "url": "https://exchangerate.host/#/donate"
   },
   "success": true,
-  "historical": true,
-  "base": "SEK",
-  "date": "2020-04-04",
+  "timeseries": true,
+  "base": "USD",
+  "start_date": "2020-04-04",
+  "end_date": "2020-04-06",
   "rates": {
-    "NOK": 1.028984
+    "2020-04-04": {
+      "NOK": 10.3719
+    },
+    "2020-04-05": {
+      "NOK": 10.3719
+    },
+    "2020-04-06": {
+      "NOK": 10.562598
+    }
   }
 }</value>
   </data>

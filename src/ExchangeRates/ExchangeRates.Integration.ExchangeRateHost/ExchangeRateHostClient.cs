@@ -5,7 +5,8 @@ namespace ExchangeRates.Integration.ExchangeRateHost
 {
     public interface IExchangeRateHostClient
     {
-        Task<HistoricalRateResponse> GetHistoricalRateAsync(string sourceCurrency, string targetCurrenty, DateTime date);
+
+        Task<TimeSeriesRateResponse> GetTimeSeriesRatesAsync(string sourceCurrency, string targetCurrency, DateTime startDate, DateTime endDate);
     }
 
     public class ExchangeRateHostClient : IExchangeRateHostClient
@@ -21,15 +22,30 @@ namespace ExchangeRates.Integration.ExchangeRateHost
             _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
-        public async Task<HistoricalRateResponse> GetHistoricalRateAsync(string sourceCurrency, string targetCurrency, DateTime date)
+        public async Task<TimeSeriesRateResponse> GetTimeSeriesRatesAsync(string sourceCurrency, string targetCurrency, DateTime startDate, DateTime endDate)
         {
+            if (string.IsNullOrEmpty(sourceCurrency))
+            {
+                throw new ArgumentException($"'{nameof(sourceCurrency)}' cannot be null or empty.", nameof(sourceCurrency));
+            }
+
+            if (string.IsNullOrEmpty(targetCurrency))
+            {
+                throw new ArgumentException($"'{nameof(targetCurrency)}' cannot be null or empty.", nameof(targetCurrency));
+            }
+
+            if (startDate > endDate)
+            {
+                throw new ArgumentOutOfRangeException($"'{nameof(startDate)}' cannot be after '{nameof(endDate)}", nameof(startDate));
+            }
+
             sourceCurrency = sourceCurrency.ToUpperInvariant();
             targetCurrency = targetCurrency.ToUpperInvariant();
 
             using var httpClient = _httpClientFactory.CreateClient(HttpClientName);
             httpClient.BaseAddress = new Uri(_options.BaseUrl);
 
-            var response = await httpClient.GetFromJsonAsync<HistoricalRateResponse>($"/{date:yyyy-MM-dd}?base={sourceCurrency}&symbols={targetCurrency}");
+            var response = await httpClient.GetFromJsonAsync<TimeSeriesRateResponse>($"/timeseries?start_date={startDate:yyyy-MM-dd}&end_date={endDate:yyyy-MM-dd}&base={sourceCurrency}&symbols={targetCurrency}");
 
             if (!response.IsValid())
             {

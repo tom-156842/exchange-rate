@@ -19,22 +19,32 @@ namespace ExchangeRates.Domain.Integrations
 
         public async Task<IEnumerable<ExchangeRate>> GetExchangeRatesAsync(string sourceCurrency, string targetCurrency, DateTime[] dates)
         {
-            var rates = new List<ExchangeRate>(dates.Length);
-
-            foreach (var date in dates)
-            {
-                // Fetch the exchange rate for the specific date
-                var response = await _client.GetHistoricalRateAsync(sourceCurrency, targetCurrency, date);
-
-                // Attempt to locate the rate for the target currency
-                if (response != null &&
-                    response.Rates.TryGetValue(targetCurrency, out var rate))
+            // Fetch data for ranges of each year
+            var fetchTasks = dates
+                .GroupBy(x => x.Year)
+                .Select(x =>
                 {
-                    rates.Add(new ExchangeRate(response.Date, rate));
-                }
-            }
+                    var startDate = x.Min();
+                    var endDate = x.Max();
 
-            return rates;
+                    return _client.GetTimeSeriesRatesAsync(sourceCurrency, targetCurrency, startDate, endDate);
+                })
+                .ToArray();
+
+            // Get the responses
+            await Task.WhenAll(fetchTasks);
+            var responses = fetchTasks
+                .Where(x => x != null)
+                .Select(x => x.Result);
+
+            // Filter to the requested dates and target currency
+            var dateLookup = dates.Distinct().ToDictionary(x => x);
+            return responses
+                .SelectMany(x => x.Rates
+                    .Where(y => dateLookup.ContainsKey(y.Key) && y.Value.ContainsKey(targetCurrency))
+                    .Select(y => new ExchangeRate(y.Key, y.Value[targetCurrency])))
+                .OrderBy(x => x.Date)
+                .ToArray();
         }
     }
 }

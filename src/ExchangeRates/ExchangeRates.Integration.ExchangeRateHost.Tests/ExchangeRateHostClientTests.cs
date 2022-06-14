@@ -41,24 +41,32 @@ namespace ExchangeRates.Integration.ExchangeRateHost.Tests
             // Arrange
             var sourceCurrency = "usd";
             var targetCurrency = "nok";
-            var date = new DateTime(2020, 4, 4);
+            var startDate = new DateTime(2020, 4, 4);
+            var endDate = new DateTime(2020, 4, 6);
 
             _handler
-                .SetupRequest(_options.Value.BaseUrl + "/2020-04-04?base=USD&symbols=NOK")
+                .SetupRequest(_options.Value.BaseUrl + "/timeseries?start_date=2020-04-04&end_date=2020-04-06&base=USD&symbols=NOK")
                 .ReturnsResponse(HttpStatusCode.OK, new StringContent(
-                    StringResources.ExchangeRateHost_HistoricalRates_Success,
+                    StringResources.ExchangeRateHost_TimeSeries_Success,
                     Encoding.UTF8,
                     "application/json"));
 
             var sut = new ExchangeRateHostClient(_options, _factory);
 
             // Act
-            var result = await sut.GetHistoricalRateAsync(sourceCurrency, targetCurrency, date);
+            var result = await sut.GetTimeSeriesRatesAsync(sourceCurrency, targetCurrency, startDate, endDate);
 
             // Assert
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(date, result.Date);
-            Assert.AreEqual(1.028984M, result.Rates.First().Value);
+            Assert.AreEqual(3, result.Rates.Count);
+            var expectedRates = new[]
+            {
+                10.3719M,
+                10.3719M,
+                10.562598M
+            };
+
+            Assert.IsTrue(result.Rates.SelectMany(x => x.Value.Select(y => y.Value)).SequenceEqual(expectedRates));
         }
 
         [TestMethod]
@@ -67,19 +75,20 @@ namespace ExchangeRates.Integration.ExchangeRateHost.Tests
             // Arrange
             var sourceCurrency = "usd";
             var targetCurrency = "nok";
-            var date = new DateTime(2020, 4, 4);
+            var startDate = new DateTime(2020, 4, 4);
+            var endDate = new DateTime(2020, 4, 6);
 
             _handler
-                .SetupRequest(_options.Value.BaseUrl + "/2020-04-04?base=USD&symbols=NOK")
+                .SetupRequest(_options.Value.BaseUrl + "/timeseries?start_date=2020-04-04&end_date=2020-04-06&base=USD&symbols=NOK")
                 .ReturnsResponse(HttpStatusCode.OK, new StringContent(
-                    StringResources.ExchangeRateHost_HistoricalRates_NonSuccess,
+                    StringResources.ExchangeRateHost_TimeSeries_NonSuccess,
                     Encoding.UTF8,
                     "application/json"));
 
             var sut = new ExchangeRateHostClient(_options, _factory);
 
             // Act
-            var result = await sut.GetHistoricalRateAsync(sourceCurrency, targetCurrency, date);
+            var result = await sut.GetTimeSeriesRatesAsync(sourceCurrency, targetCurrency, startDate, endDate);
 
             // Assert
             Assert.IsNull(result);

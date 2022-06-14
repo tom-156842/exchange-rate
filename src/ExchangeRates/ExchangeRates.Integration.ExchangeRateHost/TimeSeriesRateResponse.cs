@@ -1,10 +1,8 @@
 ﻿namespace ExchangeRates.Integration.ExchangeRateHost
 {
-    public class HistoricalRateResponse
+    public class TimeSeriesRateResponse
     {
-        public DateTime Date { get; set; }
-
-        public Dictionary<string, decimal> Rates { get; set; }
+        public Dictionary<DateTime, Dictionary<string, decimal>> Rates { get; set; }
 
         public bool Success { get; set; }
 

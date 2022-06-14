@@ -67,15 +67,16 @@ namespace ExchangeRates.Integration.ExchangeRateHost.Tests.Resources {
         ///    &quot;url&quot;: &quot;https://exchangerate.host/#/donate&quot;
         ///  },
         ///  &quot;success&quot;: false,
-        ///  &quot;historical&quot;: true,
-        ///  &quot;base&quot;: &quot;SEK&quot;,
-        ///  &quot;date&quot;: &quot;2020-04-04&quot;,
+        ///  &quot;timeseries&quot;: true,
+        ///  &quot;base&quot;: &quot;USD&quot;,
+        ///  &quot;start_date&quot;: &quot;2020-04-04&quot;,
+        ///  &quot;end_date&quot;: &quot;2020-04-06&quot;,
         ///  &quot;rates&quot;: null
         ///}.
         /// </summary>
-        internal static string ExchangeRateHost_HistoricalRates_NonSuccess {
+        internal static string ExchangeRateHost_TimeSeries_NonSuccess {
             get {
-                return ResourceManager.GetString("ExchangeRateHost_HistoricalRates_NonSuccess", resourceCulture);
+                return ResourceManager.GetString("ExchangeRateHost_TimeSeries_NonSuccess", resourceCulture);
             }
         }
         
@@ -86,17 +87,23 @@ namespace ExchangeRates.Integration.ExchangeRateHost.Tests.Resources {
         ///    &quot;url&quot;: &quot;https://exchangerate.host/#/donate&quot;
         ///  },
         ///  &quot;success&quot;: true,
-        ///  &quot;historical&quot;: true,
-        ///  &quot;base&quot;: &quot;SEK&quot;,
-        ///  &quot;date&quot;: &quot;2020-04-04&quot;,
+        ///  &quot;timeseries&quot;: true,
+        ///  &quot;base&quot;: &quot;USD&quot;,
+        ///  &quot;start_date&quot;: &quot;2020-04-04&quot;,
+        ///  &quot;end_date&quot;: &quot;2020-04-06&quot;,
         ///  &quot;rates&quot;: {
-        ///    &quot;NOK&quot;: 1.028984
-        ///  }
-        ///}.
+        ///    &quot;2020-04-04&quot;: {
+        ///      &quot;NOK&quot;: 10.3719
+        ///    },
+        ///    &quot;2020-04-05&quot;: {
+        ///      &quot;NOK&quot;: 10.3719
+        ///    },
+        ///    &quot;2020-04-06&quot;: {
+        ///      &quot;NOK&quot;: 10.5625 [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ExchangeRateHost_HistoricalRates_Success {
+        internal static string ExchangeRateHost_TimeSeries_Success {
             get {
-                return ResourceManager.GetString("ExchangeRateHost_HistoricalRates_Success", resourceCulture);
+                return ResourceManager.GetString("ExchangeRateHost_TimeSeries_Success", resourceCulture);
             }
         }
     }
